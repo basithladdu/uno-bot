@@ -1,0 +1,65 @@
+from base_bot import BaseBot
+from collections import Counter
+
+class Player(BaseBot):
+    def choose_card(self, top_card):
+        # checks if I can play a card - either same color or number works
+        # example: if top is R5, I can play R7 (red) or B5 (five)
+        def can_play_card(card, top_card):
+            return (card[0] == top_card[0] or  # colors match
+                   card[1:] == top_card[1:])   # numbers match
+        
+        # looks at my hand and figures out what color I have the most of
+        # this helps when playing wild cards - might as well pick my best color!
+        def my_best_color():
+            my_colors = Counter()
+            # count how many of each color I have
+            for card in self.hand:
+                # only count regular cards RGBY, not wild cards
+                if card[0] in 'RGBY':
+                    my_colors[card[0]] += 1
+            
+            # if somehow I have no colors (shouldn't happen but just in case)
+            # just return red as default - any color works really
+            if not my_colors:
+                return 'R'
+            
+            # return whatever color I have most of
+            return my_colors.most_common(1)[0][0]
+        
+        # first try to play any normal card that matches
+        # no point using wild cards if I don't have to!
+        for card in self.hand:
+            # skip wilds for now, save them for when we need them
+            if card in ['WC', 'PC']:
+                continue
+            
+            # found a matching card? great, play it!
+            if can_play_card(card, top_card):
+                return card
+        
+        # ok no matching cards... time for plan B - wild cards
+        # regular wild first - no need to use +4 unless we have to
+        if 'WC' in self.hand:
+            return f'W{my_best_color()}'  # add my best color to the wild
+        
+        # last resort - if I have a +4, might as well use it
+        if 'PC' in self.hand:
+            return f'P{my_best_color()}'  # same deal - use my best color
+        
+        # welp, nothing I can do - gotta draw a card
+        return None
+
+# this is just for testing the bot by itself
+# lets me try different hands and see what it does
+if __name__ == "__main__":
+    bot = Player(player_id=0)
+    try:
+        # get test input - format like "R4 B7 WC" for the hand
+        bot.hand = input("Enter your hand as space-separated cards: ").strip().split()
+        top_card = input("Enter the top card: ").strip()
+        move = bot.choose_card(top_card)
+        print(f"Chosen card: {move}")
+    except Exception as e:
+        # something went wrong with the input probably
+        print("Error in testing mode")
