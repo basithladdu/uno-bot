@@ -1,17 +1,26 @@
-# Code-Patti
+# 🧬 Code-Patti: UNO Framework (Unstop Competition) 🃏
 
-**Code-Patti** is an UNO-based game framework designed for creating and playing UNO-style card games. This framework provides the foundation for building custom game rules, managing players, and handling game logic.
+UNO framework for custom card games. Developed for the Unstop Code-Patti UNO competition.
 
-## Features
-- Customizable UNO game rules.
-- Player management and turn-based gameplay.
-- Easy-to-extend framework for additional features.
+**✨ Features:** Customizable rules, player management, turn-based gameplay, easy to extend.
 
-## Installation
-To use this project, clone the repository and set it up locally:
-
+**🛠️ Installation:**
 ```bash
-git clone https://github.com/basithladdu/uno-bot.git
+git clone [https://github.com/basithladdu/uno-bot.git](https://github.com/basithladdu/uno-bot.git)
 cd uno-bot
+pip install -r requirements.txt
+```
 
+**🎮 Running:**
+```bash
+python main.py  # Interactive
+python playerbot.py # Automated bot
+```
 
+**🐛 Troubleshooting:** Check Python install, dependencies, and script location.
+
+**🤝 Contributing:** Fork, branch, commit, push, pull request.
+
+**📜 License:** MIT License. See `LICENSE`.
+
+**📧 Contact:** Reach out for questions/feedback.
